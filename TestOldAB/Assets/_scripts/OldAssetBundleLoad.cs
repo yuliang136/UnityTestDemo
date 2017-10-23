@@ -39,10 +39,11 @@ public class OldAssetBundleLoad : MonoBehaviour
 
         WWW bundle = new WWW(path);
 
-
+        
         Debug.Log("m_frameCount = " + m_frameCount);
 
         yield return bundle;
+        //yield return null;
 
         Debug.Log("m_frameCount = " + m_frameCount);
 
