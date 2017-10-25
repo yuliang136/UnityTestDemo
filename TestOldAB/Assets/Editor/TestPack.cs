@@ -5,6 +5,52 @@ using UnityEditor;
 public class TestPack
 {
 
+    [MenuItem("AB Editor/Create Dependence AssetBunldes")]
+    public static void Pack()
+    {
+        string path = Application.dataPath + "/StreamingAssets";
+
+        BuildTarget target = BuildTarget.StandaloneWindows64;
+
+        BuildAssetBundleOptions op = BuildAssetBundleOptions.CollectDependencies |
+                                        BuildAssetBundleOptions.CompleteAssets |
+                                        BuildAssetBundleOptions.DeterministicAssetBundle;
+        // (A
+        BuildPipeline.PushAssetDependencies();
+
+        BuildPipeline.BuildAssetBundle(AssetDatabase.LoadMainAssetAtPath("Assets/Resources/myMat.mat"),
+                                        null,
+                                        path + "/green.assetbundle",
+                                        op,
+                                        target);
+
+        // (B
+        BuildPipeline.PushAssetDependencies();
+        BuildPipeline.BuildAssetBundle(AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/Cube1.prefab"),
+                                null,
+                                path + "/Cube1.assetbundle",
+                                op,
+                                target);
+        // B)
+        BuildPipeline.PopAssetDependencies();
+
+        // (C
+        BuildPipeline.PushAssetDependencies();
+        BuildPipeline.BuildAssetBundle(AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/Cube2.prefab"),
+                                null,
+                                path + "/Cube2.assetbundle",
+                                op,
+                                target);
+        // C)
+        BuildPipeline.PopAssetDependencies();
+
+
+        // A)
+        BuildPipeline.PopAssetDependencies();
+
+        AssetDatabase.Refresh();
+    }
+
     [MenuItem("AB Editor/Create AssetBundles ALL")]
     static void CreateAssetBundlesALL()
     {
