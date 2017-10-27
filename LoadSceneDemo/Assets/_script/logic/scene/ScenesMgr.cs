@@ -84,7 +84,7 @@ public class ScenesMgr : MonoBehaviour
     {
         if (null == m_sceneLoader)
         {
-            GameObject go = GameObject.Find("SCENE_LOAD_Prefab");
+            GameObject go = GameObject.Find("UI_SCENE_LOAD_Prefab");
             if (null != go)
             {
                 m_sceneLoader = go.AddComponent<SceneLoader>();

@@ -10,7 +10,7 @@ public class GameLoading : MonoBehaviour
     void Awake()
     {
         // 使得在场景切换时 这个GameObject不会被销毁.
-        m_loadUI = GameObject.Find("SCENE_LOAD_Prefab");
+        m_loadUI = GameObject.Find("UI_SCENE_LOAD_Prefab");
         if (m_loadUI != null)
         {
             DontDestroyOnLoad(m_loadUI);
