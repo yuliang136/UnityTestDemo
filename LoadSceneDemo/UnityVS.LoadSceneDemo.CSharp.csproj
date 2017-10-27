@@ -190,10 +190,14 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+    <Compile Include="Assets\_scene\core\common\CallBack.cs" />
+    <Compile Include="Assets\_scene\core\common\Message.cs" />
     <Compile Include="Assets\_script\SceneLoader.cs" />
+    <Compile Include="Assets\_script\Test\BeginScene.cs" />
     <Compile Include="Assets\_script\core\GameModel.cs" />
     <Compile Include="Assets\_script\logic\Game.cs" />
     <Compile Include="Assets\_script\logic\Utils.cs" />
+    <Compile Include="Assets\_script\logic\const\MessageName.cs" />
     <Compile Include="Assets\_script\logic\scene\ScenesMgr.cs" />
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />

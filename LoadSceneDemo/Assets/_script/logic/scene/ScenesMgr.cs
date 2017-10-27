@@ -3,23 +3,28 @@ using System.Collections;
 
 public class ScenesMgr : MonoBehaviour 
 {
+    // 这里如果不是static. 设置为
+
     // 场景加载器.
-    private SceneLoader m_sceneLoader;
+    //private static SceneLoader m_sceneLoader;
+
+    public SceneLoader m_sceneLoader;
 
 
     //// 外部不能
     //void Awake()
     //{
-    //    // 是否需要对m_instance进行为空的判断.
-    //    // 这里没有调用到getInstance函数.
-    //    //if (m_instance == null)
-    //    //{
-    //    //    Debug.Log("ScenesMgr.cs Awake is null");
 
-    //    //    m_instance = this;
-    //    //}
+    //    // 是否需要对m_instance进行为空的判断. 这里没有调用到getInstance函数.
+    //    // 这个Awake必须用.
+    //    if (m_instance == null)
+    //    {
+    //        Debug.Log("ScenesMgr.cs Awake is null");
 
-        
+    //        m_instance = this;
+    //    }
+
+
     //}
 
 
@@ -56,7 +61,27 @@ public class ScenesMgr : MonoBehaviour
     {
         // 设置状态.
 
+        // 开始监听SceneCreate完成的事件.
+        Messenger.AddListener(MessageName.MN_SCENE_CREATE_COMPLETE, SceneCreateComplete);
+
+
         return Application.LoadLevelAsync("BeginScene");
+    }
+
+    private void SceneCreateComplete()
+    {
+        // 取消监听 结束本次的的场景切换.
+        Messenger.RemoveListener(MessageName.MN_SCENE_CREATE_COMPLETE, SceneCreateComplete);
+
+        CloseLoading();
+    }
+
+    private void CloseLoading()
+    {
+        if (null != m_sceneLoader)
+        {
+            m_sceneLoader.CloseLoad();
+        }
     }
 
     private void StartLoad()
@@ -82,12 +107,19 @@ public class ScenesMgr : MonoBehaviour
     /// </summary>
     private void CheckIfCreateLoader()
     {
+        //getInstance.m_sceneLoader
+
         if (null == m_sceneLoader)
         {
             GameObject go = GameObject.Find("UI_SCENE_LOAD_Prefab");
             if (null != go)
             {
-                m_sceneLoader = go.AddComponent<SceneLoader>();
+                //m_sceneLoader = go.AddComponent<SceneLoader>();
+
+                // 先把脚本挂上去.
+                m_sceneLoader = go.GetComponent<SceneLoader>();
+
+                Debug.Log(m_sceneLoader.name);
             }
         }
     }
