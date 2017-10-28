@@ -21,6 +21,8 @@ public class Utils
             obj.transform.parent = objParent.transform;
         }
 
+        Debug.Log("CreateGameObjectComponent tClass InstanceID = " + tClass.GetInstanceID());
+
         return tClass;
     }
 }

@@ -13,7 +13,7 @@ public class GameModel : MonoBehaviour
         // 加载场景切换单例.
         sceneMgr = Utils.CreateGameObjectComponent<ScenesMgr>("ScenesMgr", model);
 
-        Debug.Log("Here");
+        //Debug.Log("Here");
 
     }
 

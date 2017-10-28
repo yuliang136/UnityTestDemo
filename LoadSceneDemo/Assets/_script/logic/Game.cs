@@ -15,6 +15,8 @@ public class Game : MonoBehaviour
     void Start()
     {
         // 切换开始场景.
+        // 静态对象 调用了非静态函数.
+        // 里面的this指针指向哪里
         ScenesMgr.getInstance.GotoScene();
     }
 

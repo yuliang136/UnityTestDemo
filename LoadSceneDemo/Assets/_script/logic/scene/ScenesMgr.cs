@@ -3,48 +3,46 @@ using System.Collections;
 
 public class ScenesMgr : MonoBehaviour 
 {
-    // 这里如果不是static. 设置为
-
-    // 场景加载器.
-    //private static SceneLoader m_sceneLoader;
+    // 1 这里设置为static可用的原因是 变为针对类的一个实例.
+    private static ScenesMgr m_instance;
 
     public SceneLoader m_sceneLoader;
 
 
-    //// 外部不能
-    //void Awake()
-    //{
+    // 当附加脚本时 会调用这里.
+    // 保证Awake在所有getInstance之前调用.
+    void Awake()
+    {
+        // 保证m_instance保存的静态对象是addComponent时new出来的对象.
+        // 这样可以通过gameObject获得这个唯一的对象值.
+        m_instance = this;
 
-    //    // 是否需要对m_instance进行为空的判断. 这里没有调用到getInstance函数.
-    //    // 这个Awake必须用.
-    //    if (m_instance == null)
-    //    {
-    //        Debug.Log("ScenesMgr.cs Awake is null");
+        int nInstanceID = m_instance.GetInstanceID();
 
-    //        m_instance = this;
-    //    }
+        Debug.Log("Awake m_instance InstanceID = " + nInstanceID);
+    }
 
-
-    //}
-
-
-
-    private static ScenesMgr m_instance;
+    void Start()    
+    {
+        Debug.Log("Start m_instance InstanceID = " + m_instance.GetInstanceID());
+    }
 
     public static ScenesMgr getInstance
     {
         get
         {
-            if (m_instance == null)
+            if (null == m_instance)
             {
-                m_instance = new ScenesMgr();
+                Debug.Log("Big Problem");
             }
+
             return m_instance;
         }
     }
 
 
     // 提供对外功能.
+    // 静态对象调用非静态函数.
     public void GotoScene()
     {
         ShowLoading();
@@ -103,6 +101,7 @@ public class ScenesMgr : MonoBehaviour
     }
 
     /// <summary>
+    /// 
     /// 把SceneLoader的对象脚本保存在ScenesMgr中.
     /// </summary>
     private void CheckIfCreateLoader()
@@ -116,7 +115,8 @@ public class ScenesMgr : MonoBehaviour
             {
                 m_sceneLoader = go.AddComponent<SceneLoader>();
 
-                Debug.Log(m_sceneLoader.name);
+                //int nInstanceID = this.GetInstanceID();
+                //Debug.Log("CheckIfCreateLoader this.GetInstanceID = " + nInstanceID);
             }
         }
     }
