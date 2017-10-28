@@ -114,10 +114,7 @@ public class ScenesMgr : MonoBehaviour
             GameObject go = GameObject.Find("UI_SCENE_LOAD_Prefab");
             if (null != go)
             {
-                //m_sceneLoader = go.AddComponent<SceneLoader>();
-
-                // 先把脚本挂上去.
-                m_sceneLoader = go.GetComponent<SceneLoader>();
+                m_sceneLoader = go.AddComponent<SceneLoader>();
 
                 Debug.Log(m_sceneLoader.name);
             }
