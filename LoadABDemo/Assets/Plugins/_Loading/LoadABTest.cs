@@ -30,7 +30,9 @@ public class LoadABTest : MonoBehaviour
 
         string fontUrl = string.Empty;
 
-        fontUrl = "file://" + Application.streamingAssetsPath + local;
+        //fontUrl = "file://" + Application.streamingAssetsPath + local;
+
+        fontUrl = Setting.FILEPATH + local;
 
         //Debug.Log(fontUrl);
 
@@ -38,21 +40,24 @@ public class LoadABTest : MonoBehaviour
 
 
         // 调用协程3s后执行
-        StartCoroutine(exeLater());
-
-        //m_fontFile.GetContentWhenReady(LoadFontComplete);
-    }
-
-    private IEnumerator exeLater()
-    {
-        yield return new WaitForSeconds(3f);
-
+        //StartCoroutine(exeLater());
         m_fontFile.GetContentWhenReady(LoadFontComplete);
     }
+
+    //private IEnumerator exeLater()
+    //{
+    //    yield return new WaitForSeconds(3f);
+
+    //    m_fontFile.GetContentWhenReady(LoadFontComplete);
+    //}
 
     private void LoadFontComplete(IFile file, object param1 = null, object param2 = null, object param3 = null)
     {
         WWWFile wwwFile = file as WWWFile;
+
+        //wwwFile.GetWWW().assetBundle.
+
+
         GameObject fontPrefab = wwwFile.GetWWW().assetBundle.mainAsset as GameObject;
 
         UIFont font = fontPrefab.GetComponent<UIFont>();
@@ -63,10 +68,12 @@ public class LoadABTest : MonoBehaviour
         // 设置显示内容.
         m_label.text = "测试字体显示";
 
-        // 清除内存.
+        // 为什么需要清除内存.
+        // wwwFile里面的WWW对象内存占用是什么样子.
+        wwwFile.GetWWW().assetBundle.Unload(false);
         wwwFile.Clear();
         wwwFile = null;
-
+        
     }
 
 	// Use this for initialization

@@ -16,4 +16,26 @@ public class Setting {
             return reportErrorUrl;
         }
     }
+
+    #if UNITY_EDITOR
+	public static string FILEPATH = "file://" + Application.streamingAssetsPath;
+	
+	#elif UNITY_IPHONE
+	public static string FILEPATH = "file://" + Application.streamingAssetsPath;
+	
+    #elif UNITY_ANDROID
+	public static string FILEPATH = Application.streamingAssetsPath;
+ 
+    #endif
+
+    #if UNITY_EDITOR
+	public static string PERSISTENT_PATH = "file:///" + Application.persistentDataPath;
+	
+	#elif UNITY_IPHONE
+	public static string PERSISTENT_PATH = "file://" + Application.persistentDataPath;
+	
+    #elif UNITY_ANDROID
+	public static string PERSISTENT_PATH = "file://" + Application.persistentDataPath;
+
+    #endif
 }
