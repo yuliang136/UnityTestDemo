@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.LoadABDemo.CSharp", "UnityVS.LoadABDemo.CSharp.csproj", "{690B49EC-BD7D-8470-5E1E-675005C29364}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.LoadABDemo.CSharp.Plugins", "UnityVS.LoadABDemo.CSharp.Plugins.csproj", "{7AACCACE-7648-FE21-6E64-3E9694808B6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.LoadABDemo.CSharp.Editor", "UnityVS.LoadABDemo.CSharp.Editor.csproj", "{614E52D0-424D-61D5-1FBF-F09C27C7CF66}"
 EndProject
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{690B49EC-BD7D-8470-5E1E-675005C29364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{690B49EC-BD7D-8470-5E1E-675005C29364}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{690B49EC-BD7D-8470-5E1E-675005C29364}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{690B49EC-BD7D-8470-5E1E-675005C29364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AACCACE-7648-FE21-6E64-3E9694808B6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AACCACE-7648-FE21-6E64-3E9694808B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AACCACE-7648-FE21-6E64-3E9694808B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AACCACE-7648-FE21-6E64-3E9694808B6B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{614E52D0-424D-61D5-1FBF-F09C27C7CF66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{614E52D0-424D-61D5-1FBF-F09C27C7CF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{614E52D0-424D-61D5-1FBF-F09C27C7CF66}.Release|Any CPU.ActiveCfg = Release|Any CPU
