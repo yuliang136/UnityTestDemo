@@ -4,7 +4,8 @@ using System.Threading;
 using System;
 namespace MyThread
 {
-	public class DownLoadThreadPool{
+	public class DownLoadThreadPool
+    {
 		int maxNum = 10;
 		public bool isStop = false;
 		public int MAXNUM

@@ -26,6 +26,8 @@ public class LoadABTest : MonoBehaviour
 
         string local = "/res/ui/font/font.assetbundle";
 
+        //string local = "/res/ui/font/errorFont.assetbundle";
+
         string fontUrl = string.Empty;
 
         fontUrl = "file://" + Application.streamingAssetsPath + local;
@@ -33,6 +35,18 @@ public class LoadABTest : MonoBehaviour
         //Debug.Log(fontUrl);
 
         m_fontFile = new WWWFile(fontUrl);
+
+
+        // 调用协程3s后执行
+        StartCoroutine(exeLater());
+
+        //m_fontFile.GetContentWhenReady(LoadFontComplete);
+    }
+
+    private IEnumerator exeLater()
+    {
+        yield return new WaitForSeconds(3f);
+
         m_fontFile.GetContentWhenReady(LoadFontComplete);
     }
 
