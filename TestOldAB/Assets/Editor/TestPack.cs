@@ -4,6 +4,37 @@ using UnityEditor;
 
 public class TestPack
 {
+    [MenuItem("AB Editor/Create Single AssetBunlde")]
+    public static void PackSingle()
+    {
+        string path = Application.dataPath + "/StreamingAssets";
+
+        BuildTarget target = BuildTarget.StandaloneWindows64;
+
+        BuildAssetBundleOptions op = BuildAssetBundleOptions.DeterministicAssetBundle |
+                                        BuildAssetBundleOptions.CollectDependencies;
+
+        //BuildAssetBundleOptions op = BuildAssetBundleOptions.DeterministicAssetBundle |
+        //                                BuildAssetBundleOptions.CompleteAssets;
+
+        //BuildAssetBundleOptions op = BuildAssetBundleOptions.DeterministicAssetBundle;
+
+        //BuildAssetBundleOptions op = null;
+
+        GameObject obSet = AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/Cube1.prefab") as GameObject;
+
+        MeshRenderer myMesh = obSet.GetComponent<MeshRenderer>();
+
+        BuildPipeline.BuildAssetBundle(myMesh,
+                        null,
+                        path + "/Cube1.assetbundle",
+                        op,
+                        target);
+
+        AssetDatabase.Refresh();
+
+    }
+    
 
     [MenuItem("AB Editor/Create Dependence AssetBunldes")]
     public static void Pack()

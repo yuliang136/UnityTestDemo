@@ -29,7 +29,7 @@ public class OldAssetBundleLoad : MonoBehaviour
         //StartCoroutine(LoadALLGameObject(PathURL + "ALL.assetbundle"));
 
         //_current = MyTestYield();
-        StartCoroutine(LoadMainGameObject(PathURL + "green.assetbundle"));
+        //StartCoroutine(LoadMainGameObject(PathURL + "green.assetbundle"));
         StartCoroutine(LoadMainGameObject(PathURL + "Cube1.assetbundle"));
         //StartCoroutine(LoadMainGameObject(PathURL + "Cube2.assetbundle"));
 
@@ -77,6 +77,13 @@ public class OldAssetBundleLoad : MonoBehaviour
         WWW bundle = new WWW(path);
 
         yield return bundle;
+
+        MeshRenderer meshRenderer = bundle.assetBundle.mainAsset as MeshRenderer;
+
+        if (null != meshRenderer)
+        {
+            Debug.Log(meshRenderer.name);
+        }
 
         Instantiate(bundle.assetBundle.mainAsset);
         yield return null;
