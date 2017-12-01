@@ -1,4 +1,4 @@
-namespace LuaInterface
+﻿namespace LuaInterface
 {
     using System;
     using System.IO;
@@ -24,8 +24,9 @@ namespace LuaInterface
             {
                 _cachedMethod = value;
                 MethodInfo mi = value as MethodInfo;
+
                 if (mi != null)
-                {
+                {                    
                     //SJD this is guaranteed to be correct irrespective of actual name used for type..
                     IsReturnVoid = mi.ReturnType == typeof(void);
                 }
@@ -34,7 +35,9 @@ namespace LuaInterface
 
         public bool IsReturnVoid;
 
-        // List or arguments
+		// List or arguments, 
+		// fjs: 狗日的这个会缓存每一次调用某个函数的参数，导致内存释放不了。
+		// 修改方案: 调用完成后，或中间出错退出时一定要清空这个数组的所有元素, 完事以后一定得提起裤子就走人，别留恋!
         public object[] args;
         // Positions of out parameters
         public int[] outList;
@@ -131,6 +134,15 @@ namespace LuaInterface
             return Math.Ceiling(x) == x;
         }
 
+		// fjs: 清空缓存的 args 数组，否则这里会造成内存泄露，无法被GC掉, 纹理内存最严重
+		private void ClearCachedArgs()
+		{
+			if(_LastCalledMethod.args == null) { return ; }
+			for(int i = 0; i < _LastCalledMethod.args.Length; i++)
+			{
+				_LastCalledMethod.args[i] = null;
+			}
+		}
 
         /*
          * Calls the method. Receives the arguments from the Lua stack
@@ -169,6 +181,7 @@ namespace LuaInterface
                         if (!LuaDLL.lua_checkstack(luaState, _LastCalledMethod.outList.Length + 6))
                             throw new LuaException("Lua stack overflow");
 
+						// fjs: 这里 args 只是将 _LastCalledMethod.args 拿来做缓冲区用，避免内存再分配, 里面的值是可以干掉的
                         object[] args = _LastCalledMethod.args;
 
                         try
@@ -246,6 +259,7 @@ namespace LuaInterface
 
                         MethodBase m = (MethodInfo)member;
 
+						// fjs: 这里在缓存调用参数，退出前一定要释放掉
                         bool isMethod = _Translator.matchParameters(luaState, m, ref _LastCalledMethod);
                         if (isMethod)
                         {
@@ -259,8 +273,12 @@ namespace LuaInterface
                             ? "invalid arguments to method call"
                             : ("invalid arguments to method: " + candidateName);
 
-                        _Translator.throwError(luaState, msg);
+                        LuaDLL.luaL_error(luaState, msg);
                         LuaDLL.lua_pushnil(luaState);
+
+						// fjs: 这里释放掉缓存的参数对象
+						ClearCachedArgs();
+
                         return 1;
                     }
                 }
@@ -270,6 +288,7 @@ namespace LuaInterface
                 if (methodToCall.ContainsGenericParameters)
                 {
                     // bool isMethod = //* not used
+					// fjs: 这里在缓存调用参数，退出前一定要释放掉
                     _Translator.matchParameters(luaState, methodToCall, ref _LastCalledMethod);
 
                     if (methodToCall.IsGenericMethodDefinition)
@@ -287,8 +306,11 @@ namespace LuaInterface
                     }
                     else if (methodToCall.ContainsGenericParameters)
                     {
-                        _Translator.throwError(luaState, "unable to invoke method on generic class as the current method is an open generic method");
+                        LuaDLL.luaL_error(luaState, "unable to invoke method on generic class as the current method is an open generic method");
                         LuaDLL.lua_pushnil(luaState);
+
+						// fjs: 这里释放掉缓存的参数对象
+						ClearCachedArgs();
                         return 1;
                     }
                 }
@@ -300,10 +322,14 @@ namespace LuaInterface
                         LuaDLL.lua_remove(luaState, 1); // Pops the receiver
                     }
 
+					// fjs: 这里在缓存调用参数，退出前一定要释放掉
                     if (!_Translator.matchParameters(luaState, methodToCall, ref _LastCalledMethod))
                     {
-                        _Translator.throwError(luaState, "invalid arguments to method call");
+                        LuaDLL.luaL_error(luaState, "invalid arguments to method call");
                         LuaDLL.lua_pushnil(luaState);
+
+						// fjs: 这里释放掉缓存的参数对象
+						ClearCachedArgs();
                         return 1;
                     }
                 }
@@ -312,7 +338,11 @@ namespace LuaInterface
             if (failedCall)
             {
                 if (!LuaDLL.lua_checkstack(luaState, _LastCalledMethod.outList.Length + 6))
+				{
+					// fjs: 这里释放掉缓存的参数对象
+					ClearCachedArgs();
                     throw new LuaException("Lua stack overflow");
+				}
                 try
                 {
                     if (isStatic)
@@ -329,10 +359,14 @@ namespace LuaInterface
                 }
                 catch (TargetInvocationException e)
                 {
+					// fjs: 这里释放掉缓存的参数对象
+					ClearCachedArgs();
                     return SetPendingException(e.GetBaseException());
                 }
                 catch (Exception e)
                 {
+					// fjs: 这里释放掉缓存的参数对象
+					ClearCachedArgs();
                     return SetPendingException(e);
                 }
             }
@@ -353,6 +387,9 @@ namespace LuaInterface
             {
                 nReturnValues++;
             }
+
+			// fjs: 这里释放掉缓存的参数对象
+			ClearCachedArgs();
 
             return nReturnValues < 1 ? 1 : nReturnValues;
         }
