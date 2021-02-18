@@ -11,6 +11,11 @@ public class FpsUpdater : MonoBehaviour
     private int count;
     private float deltaTime;
 
+    void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
