@@ -28,6 +28,8 @@ public class FpsUpdater : MonoBehaviour
         // QualitySettings.SetQualityLevel(2);
         // Debug.Log("QualitySettings.SetQualityLevel(2)");
 
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
         Debug.Log("Default QualitySettings.SetQualityLevel");
     }
 
