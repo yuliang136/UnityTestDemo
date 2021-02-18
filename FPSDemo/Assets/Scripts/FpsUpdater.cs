@@ -13,7 +13,10 @@ public class FpsUpdater : MonoBehaviour
 
     void Awake()
     {
-        QualitySettings.vSyncCount = 0;
+        // QualitySettings.vSyncCount = 0;
+
+        // Sync framerate to monitors refresh rate
+        QualitySettings.vSyncCount = 1;
     }
 
     // Update is called once per frame
