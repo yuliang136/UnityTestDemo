@@ -16,7 +16,10 @@ public class FpsUpdater : MonoBehaviour
         // QualitySettings.vSyncCount = 0;
 
         // Sync framerate to monitors refresh rate
-        QualitySettings.vSyncCount = 1;
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+
+        Debug.Log("QualitySettings.vSyncCount = 0");
     }
 
     // Update is called once per frame
