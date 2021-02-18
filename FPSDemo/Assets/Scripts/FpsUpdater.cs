@@ -25,8 +25,10 @@ public class FpsUpdater : MonoBehaviour
 
         // QualitySettings.SetQualityLevel(QualityLevel.Fastest)
 
-        QualitySettings.SetQualityLevel(2);
-        Debug.Log("QualitySettings.SetQualityLevel(2)");
+        // QualitySettings.SetQualityLevel(2);
+        // Debug.Log("QualitySettings.SetQualityLevel(2)");
+
+        Debug.Log("Default QualitySettings.SetQualityLevel");
     }
 
     // Update is called once per frame
