@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b2defe6593901564595444e6b0202df0
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 32
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Neuron
+  fontNames:
+  - FZDaHei-B02S
+  fallbackFontReferences: []
+  customCharacters: 1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm
+    ,./;'[]-=`~!@#$%^&*()_+{}:"?><
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
